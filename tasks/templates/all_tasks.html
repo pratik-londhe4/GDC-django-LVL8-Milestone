@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div
+      class="flex border-2 p-4 h-screen align-items-center justify-center bg-gray-100"
+    >
+      <div
+        class="p-4 border sm:w-1/3 w-full rounded-lg shadow-md bg-white flex flex-col"
+      >
+        <div class="flex justify-between">
+          <div class="text-center text-3xl font-bold">Hi {{request.user}}</div>
+          <div>
+            <form action="/user/logout/" method="post">
+              {%csrf_token%}
+              <button type="submit" class="text-red-500 font-semibold">
+                Log out
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="flex justify-evenly my-4">
+          <a
+            href="/tasks/all"
+            class="text-purple-500 bg-purple-200 px-4 py-1 rounded-full"
+            >All</a
+          >
+          <a href="/tasks" class="px-4 py-1">Pending</a>
+          <a href="/tasks/completed" class="px-4 py-1">Completed</a>
+        </div>
+        <div class="text-gray-400">{{completed}} of {{all}} completed</div>
+        <div class="flex flex-col flex-1">
+          {%for task in tasks %} {%if task.completed%}
+          <div
+            class="rounded-lg my-2 bg-gray-100 flex justify-between p-4 items-center"
+          >
+            <a>
+              <div class="font-semibold line-through text-red-500">
+                {{task.title}}
+              </div>
+              <p class="text-gray-600">{{task.created_date}}</p>
+            </a>
+
+            <div class="flex">
+              <a
+                href=" /tasks/delete/{{task.id}}"
+                class="leading-8 h-8 w-8 bg-red-500 rounded-md text-center"
+                ><i
+                  class="fa fa-trash"
+                  style="color: white; font-size: larger"
+                ></i
+              ></a>
+            </div>
+          </div>
+          {%else%}
+          <div
+            class="rounded-lg my-2 bg-gray-100 flex justify-between p-4 items-center"
+          >
+            <a href="/tasks/task/{{task.id}}" class="leading-tight">
+              <div class="font-semibold">{{task.title}}</div>
+              <p class="text-gray-600">{{task.created_date}}</p>
+            </a>
+            <div class="flex">
+              <a
+                href="/tasks/update/{{task.id}}"
+                class="leading-8 h-8 w-8 bg-green-400 rounded-md mr-2 text-center"
+                ><i
+                  class="fa fa-pencil"
+                  style="color: white; font-size: larger"
+                ></i
+              ></a>
+              <a
+                href="/tasks/delete/{{task.id}}"
+                class="leading-8 h-8 w-8 bg-red-500 rounded-md text-center"
+                ><i
+                  class="fa fa-trash"
+                  style="color: white; font-size: larger"
+                ></i
+              ></a>
+            </div>
+          </div>
+          {%endif%} {%endfor%}
+          <div class="flex justify-left">
+            {%for page in paginator.page_range%}
+            <a
+              href="?page={{page}}&search={{request.GET.search}}"
+              class="px-4 rounded-full py-0 text-white bg-red-400 my-0 mx-1"
+            >
+              {{page}}
+            </a>
+            {%endfor%}
+          </div>
+        </div>
+
+        <a
+          href="/tasks/create/"
+          class="text-center my-12 bg-red-500 text-white w-full rounded-md py-2 hover:bg-red-400 transition ease-in-out duration-300"
+        >
+          Create Task</a
+        >
+      </div>
+    </div>
+{% endblock %}

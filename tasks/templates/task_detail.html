@@ -1,0 +1,19 @@
+
+    {% extends 'base.html' %}
+
+    {% block content %}
+    <div
+      class="flex border-2 p-4 h-screen align-items-center justify-center bg-gray-100"
+    >
+      <div
+        class="p-4 border sm:w-1/3 w-full rounded-lg shadow-md bg-white flex flex-col"
+      >
+        <div class="font-semibold text-xl">{{object.title}}</div>
+        <div class="my-4 p-4 bg-gray-100 rounded-lg">
+          {{object.description}}
+        </div>
+        <div class="">Priority : {{object.priority}}</div>
+        <div>{{object.created_date}}</div>
+      </div>
+    </div>
+ {% endblock %}

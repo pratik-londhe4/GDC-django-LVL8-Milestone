@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div
+      class="flex border-2 p-4 h-screen align-items-center justify-center bg-gray-100"
+    >
+      <div
+        class="p-4 border sm:w-1/3 w-full rounded-lg shadow-md bg-white flex flex-col"
+      >
+        <div class="flex justify-between">
+          <div class="text-center text-3xl font-bold">Hi {{request.user}}</div>
+          <p></p>
+          <div>
+            <form action="/user/logout/" method="post">
+              {%csrf_token%}
+              <button type="submit" class="text-red-500 font-bold">
+                Log out
+              </button>
+            </form>
+          </div>
+        </div>
+        <div class="flex justify-evenly font-semibold my-4">
+          <a href="all/" class="px-4 py-1">All</a>
+          <a
+            href="/tasks"
+            class="text-green-500 bg-green-200 px-4 py-1 rounded-full"
+            >Pending</a
+          >
+          <a href="completed/" class="px-4 py-1">Completed</a>
+        </div>
+        <div class="mb-2">
+          <form method="GET" class="flex">
+            <input
+              type="text"
+              placeholder="Search"
+              name="search"
+              class="bg-gray-200 rounded-l-md p-1 px-2 focus:outline-none focus:ring-2 w-2/3 border-1"
+            />
+            <button
+              type="submit"
+              class="w-1/3 bg-red-500 border border-red-600 text-white mx-0 p-1 rounded-r-md hover:bg-red-400 transition ease-in-out duration-300"
+            >
+              Search<i
+                class="fa fa-magnifying-glass px-2"
+                style="color: aliceblue; font-size: larger"
+              ></i>
+            </button>
+          </form>
+        </div>
+        <div class="flex flex-1 flex-col">
+          {%for task in tasks %}
+          <div
+            class="rounded-lg my-2 bg-gray-100 flex justify-between p-4 items-center"
+          >
+            <div class="flex">
+              <form action="complete/{{task.id}}" method="post">
+                {%csrf_token%}
+                <input type="hidden" name="task_id" value="{{task.id}}" />
+                <button
+                  class="leading-8 h-8 w-8 text-3xl rounded-md mr-2 text-center"
+                  type="submit"
+                >
+                  <i class="fa fa-check" style="color: green"></i>
+                </button>
+              </form>
+              <a href="task/{{task.id}}" class="ml-2 leading-tight">
+                <div class="font-semibold">{{task.title}}</div>
+                <p class="text-red-600">{{task.created_date}}</p>
+              </a>
+            </div>
+            <div class="flex items-center">
+              <a
+                href="update/{{task.id}}"
+                class="leading-8 h-8 w-8 bg-green-400 rounded-md mr-2 text-center"
+                ><i
+                  class="fa fa-pencil"
+                  style="color: white; font-size: larger"
+                ></i
+              ></a>
+              <a
+                href="delete/{{task.id}}"
+                class="leading-8 h-8 w-8 bg-red-500 rounded-md text-center"
+                ><i
+                  class="fa fa-trash"
+                  style="color: white; font-size: larger"
+                ></i
+              ></a>
+            </div>
+          </div>
+          {%endfor%}
+          <div class="flex justify-left">
+            {%for page in paginator.page_range%}
+            <a
+              href="?page={{page}}&search={{request.GET.search}}"
+              class="px-4 py-0 rounded-full text-white bg-red-500 my-0 mx-1"
+            >
+              {{page}}
+            </a>
+            {%endfor%}
+          </div>
+        </div>
+        <a
+          href="create/"
+          class="text-center my-12 bg-red-500 text-white w-full rounded-md py-2 hover:bg-red-400 transition ease-in-out duration-300"
+        >
+          Create Task</a
+        >
+      </div>
+    </div>
+  {% endblock %}

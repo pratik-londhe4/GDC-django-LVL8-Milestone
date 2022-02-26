@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css"
+      integrity="sha512-wnea99uKIC3TJF7v4eKk4Y+lMz2Mklv18+r4na2Gn1abDRPPOeef95xTzdwGD9e6zXJBteMIhZ1+68QC5byJZw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="https://www.writeroo.in/inc/lib/fawesome.js"></script>
+
+    <title>Task manager</title>
+    <style>
+      input {
+        background-color: aliceblue;
+        height: 40px;
+        padding: 5px;
+      }
+      textarea {
+        background-color: aliceblue;
+        padding: 5px;
+        border: 0.5px solid skyblue;
+      }
+      #id_completed {
+        position: absolute;
+        margin-top: -0.5%;
+        margin-left: 2%;
+      }
+    </style>
+  </head>
+
+  <body>
+      {% block content %}{% endblock %}
+      </body>
