@@ -1,4 +1,5 @@
 
+from xmlrpc.client import boolean
 from django.db import models
 
 from django.contrib.auth.models import User
@@ -41,6 +42,7 @@ class History(models.Model):
 class Report(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     reminder_time = models.TimeField()
+    disabled = models.BooleanField(default=True)
 
 
 @receiver(pre_save, sender=Task)

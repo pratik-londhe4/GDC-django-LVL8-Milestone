@@ -35,4 +35,4 @@ class EmailReportForm(LoginRequiredMixin, ModelForm):
             'reminder_time': forms.TimeInput(
                 attrs={'placeholder': 'HH:MM'}),
         }
-        fields = ("reminder_time", )
+        fields = ("reminder_time", "disabled")

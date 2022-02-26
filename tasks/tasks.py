@@ -16,7 +16,7 @@ def send_email_report():
     now = datetime.now().strftime('%H:%M')
     print("time is now " + now)
 
-    for report in Report.objects.filter(reminder_time=now):
+    for report in Report.objects.filter(reminder_time=now, diabled=False):
         user = User.objects.get(id=report.user.id)
 
         all_tasks = Task.objects.filter(deleted=False, user=user)
