@@ -1,41 +1,37 @@
-{% extends 'base.html'%}
-
-{% block content%}
+{% extends 'base.html'%} {% block content%}
 <div
-class="flex border-2 p-4 h-screen align-items-center justify-center bg-gray-100"
+  class="flex border-2 p-4 h-screen align-items-center justify-center bg-gray-100"
 >
-<div
-  class="p-4 border sm:w-1/3 w-full rounded-lg shadow-md bg-white flex flex-col"
->
-  <form method="post">
-    {%csrf_token%}
-    <h1 class="text-2xl font-bold mb-4">Task Manager</h1>
-    <div class="text-red-500">{{form.non_field_errors}}</div>
-    <div class="font-semibold text-xl">Set Reminder</div>
-    {%for field in form%}
-    <div class="my-4 flex flex-col">
-      <div class="mb-1">{{field.label}}</div>
-      {{field}} 
-      <ol class="list-disc ml-6 text-sm text-red-500">
-        {%if field.errors%}
-        {%for error in field.errors %}
-        <li>{{error}}</li>
-        {%endfor%}
-      </ol>
-      {%endif%}
-    </div>
-    {%endfor%}
-    <p class="ml-2 text-sm text-red-500">Add time in HH:MM format</p>
+  <div
+    class="p-4 border sm:w-1/3 w-full rounded-lg shadow-md bg-white flex flex-col"
+  >
+    <form method="post">
+      {%csrf_token%}
+      <h1 class="text-2xl font-bold mb-4">Task Manager</h1>
+      <div class="text-red-500">{{form.non_field_errors}}</div>
+      <div class="font-semibold text-xl">Set Reminder</div>
+      {%for field in form%}
+      <div class="my-4 flex flex-col">
+        <div class="mb-1">{{field.label}}</div>
+        {{field}}
+        <ol class="list-disc ml-6 text-sm text-red-500">
+          {%if field.errors%} {%for error in field.errors %}
+          <li>{{error}}</li>
+          {%endfor%}
+        </ol>
+        {%endif%}
+      </div>
+      {%endfor%}
+      <p class="ml-2 text-sm text-red-500">Add time in HH:MM format</p>
 
-    <button
-      type="submit"
-      class="text-center bg-red-500 text-white w-full rounded-md py-2 hover:bg-red-400 transition ease-in-out duration-300"
-    >
-      Set Reminder
-    </button>
-  </form>
- 
-</div>
+      <button
+        type="submit"
+        class="text-center bg-red-500 text-white w-full rounded-md py-2 hover:bg-red-400 transition ease-in-out duration-300"
+      >
+        Set Reminder
+      </button>
+    </form>
+  </div>
 </div>
 
 {% endblock%}

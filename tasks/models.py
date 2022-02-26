@@ -39,8 +39,9 @@ class History(models.Model):
 
 
 class Report(models.Model):
-    user = models.ForeignKey(User , on_delete=models.CASCADE  ,null=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     reminder_time = models.TimeField()
+
 
 @receiver(pre_save, sender=Task)
 def task_update_trigger(sender, instance, **kwargs):

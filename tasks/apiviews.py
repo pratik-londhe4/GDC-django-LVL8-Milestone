@@ -1,27 +1,15 @@
 
-from django_filters.rest_framework import (
-    DjangoFilterBackend,
-    FilterSet,
-    CharFilter,
-    ChoiceFilter,
-    BooleanFilter,
-    ModelChoiceFilter,
-    DateFromToRangeFilter,
-    DateTimeFilter,
-)
 from django.contrib.auth.models import User
-
-
-from tasks.models import Task, History
-
-
+from django_filters.rest_framework import (BooleanFilter, CharFilter,
+                                           ChoiceFilter, DateFromToRangeFilter,
+                                           DateTimeFilter, DjangoFilterBackend,
+                                           FilterSet, ModelChoiceFilter)
+from rest_framework import mixins
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.serializers import ModelSerializer
-
 from rest_framework.viewsets import ModelViewSet, ReadOnlyModelViewSet
 
-from rest_framework.permissions import IsAuthenticated
-
-from rest_framework import mixins
+from tasks.models import History, Task
 
 
 class UserSerializer(ModelSerializer):

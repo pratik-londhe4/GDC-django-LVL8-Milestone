@@ -8,8 +8,7 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.views.generic.list import ListView
 from django.core.exceptions import ValidationError
 
-
-from tasks.models import Task, Report
+from tasks.models import Task
 
 from .forms import TaskCreateForm, EmailReportForm
 
@@ -157,5 +156,3 @@ class GenericTaskEmailReportView(LoginRequiredMixin, CreateView):
         self.object.user = user
         self.object.save()
         return HttpResponseRedirect("/tasks")
-
-

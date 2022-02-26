@@ -36,5 +36,3 @@ class EmailReportForm(LoginRequiredMixin, ModelForm):
                 attrs={'placeholder': 'HH:MM'}),
         }
         fields = ("reminder_time", )
-    
-   
