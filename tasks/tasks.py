@@ -1,7 +1,7 @@
 from tasks.models import Task
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
-
+from django.db.models import Q
 from datetime import datetime
 
 from tasks.models import Report
@@ -16,9 +16,8 @@ def send_email_report():
     now = datetime.now().strftime('%H:%M')
     print("time is now " + now)
 
-    for report in Report.objects.filter(reminder_time=now, diabled=False):
+    for report in Report.objects.filter(reminder_time__lte=now,  disabled=False).filter(Q(last_email_sent__isnull=True) | Q(last_email_sent__gt=now)):
         user = User.objects.get(id=report.user.id)
-
         all_tasks = Task.objects.filter(deleted=False, user=user)
 
         pending_count = all_tasks.filter(status="P").count()
@@ -32,6 +31,8 @@ def send_email_report():
                   "task@taskmanager.org", [user.email])
 
         print("Email sent!")
+        report.last_email_sent = now
+        report.save()
         print(
             f"Completed Processing User {user.id} to user email: {user.email}")
 
@@ -39,6 +40,6 @@ def send_email_report():
 app.conf.beat_schedule = {
     'send-every-10-seconds': {
         'task': 'send_email_report',
-        'schedule': 60.0
+        'schedule': 5.0
     },
 }
