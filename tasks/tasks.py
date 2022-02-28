@@ -2,7 +2,7 @@ from tasks.models import Task
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.db.models import Q
-from datetime import datetime
+from datetime import datetime, date
 
 from tasks.models import Report
 
@@ -14,9 +14,11 @@ from task_manager.celery import app
 def send_email_report():
     print("Starting to process Emails")
     now = datetime.now().strftime('%H:%M')
+    today = date.today()
     print("time is now " + now)
+    print("date is now ", today)
 
-    for report in Report.objects.filter(reminder_time__lte=now,  disabled=False).filter(Q(last_email_sent__isnull=True) | Q(last_email_sent__gt=now)):
+    for report in Report.objects.filter(reminder_time__lte=now,  disabled=False).filter(~Q(last_sent_day=today)):
         user = User.objects.get(id=report.user.id)
         all_tasks = Task.objects.filter(deleted=False, user=user)
 
@@ -31,7 +33,7 @@ def send_email_report():
                   "task@taskmanager.org", [user.email])
 
         print("Email sent!")
-        report.last_email_sent = now
+        report.last_sent_day = today
         report.save()
         print(
             f"Completed Processing User {user.id} to user email: {user.email}")

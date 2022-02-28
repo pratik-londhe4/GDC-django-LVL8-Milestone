@@ -42,7 +42,7 @@ class History(models.Model):
 class Report(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     reminder_time = models.TimeField()
-    last_email_sent = models.TimeField(null=True, default=None, blank=True)
+    last_sent_day = models.DateField(null=True, default=None, blank=True)
     disabled = models.BooleanField(default=True)
 
 
